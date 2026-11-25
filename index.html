@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NOVA | Digital Playground</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background: #080b16;
+  color: white;
+  min-height: 100vh;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 8%;
+  border-bottom: 1px solid #252a40;
+}
+
+.logo {
+  font-size: 27px;
+  font-weight: bold;
+  color: #a78bfa;
+  letter-spacing: 3px;
+}
+
+header span {
+  color: #a78bfa;
+}
+
+main {
+  max-width: 1100px;
+  margin: auto;
+  padding: 55px 20px;
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.hero h1 {
+  font-size: clamp(38px, 7vw, 65px);
+  margin-bottom: 15px;
+}
+
+.hero h1 span {
+  color: #a78bfa;
+}
+
+.hero p {
+  color: #a7abc0;
+  line-height: 1.7;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #11172a;
+  border: 1px solid #292f49;
+  padding: 25px;
+  border-radius: 18px;
+  transition: 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #8b5cf6;
+}
+
+.card h2 {
+  margin-bottom: 15px;
+  font-size: 21px;
+}
+
+.card p {
+  color: #a7abc0;
+  line-height: 1.6;
+  margin-bottom: 18px;
+}
+
+button, select, textarea {
+  font: inherit;
+}
+
+button {
+  background: #8b5cf6;
+  border: none;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 9px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #7042db;
+}
+
+select, textarea {
+  width: 100%;
+  padding: 12px;
+  background: #080b16;
+  color: white;
+  border: 1px solid #353b56;
+  border-radius: 9px;
+  margin-bottom: 14px;
+}
+
+textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.result {
+  background: #1a2040;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 16px;
+  line-height: 1.6;
+  color: #ddd6fe;
+  min-height: 55px;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  text-align: center;
+  padding: 30px;
+  color: #777f9e;
+  border-top: 1px solid #252a40;
+  margin-top: 40px;
+}
+
+.small {
+  color: #a7abc0;
+  font-size: 13px;
+  margin-top: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">NOVA<span>.</span></div>
+  <div>YOUR DIGITAL PLAYGROUND</div>
+</header>
+
+<main>
+
+<section class="hero">
+  <h1>Think Beyond <span>Limits.</span></h1>
+  <p>
+    Welcome to NOVA. A place to explore ideas,
+    create projects and challenge your creativity.
+  </p>
+</section>
+
+<section class="grid">
+
+  <div class="card">
+    <h2>🚀 Idea Generator</h2>
+    <p>Discover a new technology project idea.</p>
+
+    <select id="category">
+      <option value="all">All categories</option>
+      <option value="web">Web development</option>
+      <option value="tech">Technology</option>
+      <option value="creative">Creative projects</option>
+    </select>
+
+    <button onclick="generateIdea()">Generate Idea</button>
+
+    <div class="result" id="idea">
+      Your next big idea will appear here.
+    </div>
+
+    <button onclick="saveIdea()">☆ Save Idea</button>
+  </div>
+
+  <div class="card">
+    <h2>🎯 Daily Challenge</h2>
+    <p>Get a small challenge to improve your skills.</p>
+
+    <button onclick="newChallenge()">New Challenge</button>
+
+    <div class="result" id="challenge">
+      Ready for a challenge?
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>📝 Quick Notes</h2>
+    <p>Write down your ideas. They stay saved in this browser.</p>
+
+    <textarea id="notes" placeholder="Write your ideas here..."></textarea>
+
+    <button onclick="saveNotes()">Save Notes</button>
+    <div class="small" id="noteStatus">Your notes are stored locally.</div>
+  </div>
+
+  <div class="card">
+    <h2>⭐ My Collection</h2>
+    <p>Your saved project ideas appear here.</p>
+
+    <div class="result" id="saved">
+      No saved ideas yet.
+    </div>
+
+    <button onclick="clearIdeas()">Clear Collection</button>
+  </div>
+
+</section>
+</main>
+
+<footer>
+  <p>Made with creativity and code.</p>
+  <p class="small">NOVA © 2026 | Explore. Create. Innovate.</p>
+</footer>
+
+<script>
+const ideas = {
+  web: [
+    "Build a website where people share creative inventions.",
+    "Create a personal productivity dashboard.",
+    "Build a website for discovering new learning resources.",
+    "Create an interactive virtual museum."
+  ],
+  tech: [
+    "Build a desktop voice assistant.",
+    "Create a smart home dashboard simulator.",
+    "Build a cybersecurity learning game.",
+    "Create a digital study planner."
+  ],
+  creative: [
+    "Create a 3D dream car configurator.",
+    "Build a virtual planet explorer.",
+    "Create a digital art gallery.",
+    "Build a futuristic personal portfolio."
+  ]
+};
+
+const challenges = [
+  "Create a simple calculator using JavaScript.",
+  "Design a futuristic login page.",
+  "Build a website with three interactive buttons.",
+  "Learn five new HTML tags.",
+  "Create a digital clock.",
+  "Design your own personal portfolio.",
+  "Make a responsive navigation menu."
+];
+
+let currentIdea = "";
+
+function generateIdea() {
+  const category = document.getElementById("category").value;
+  let list = [];
+
+  if (category === "all") {
+    list = Object.values(ideas).flat();
+  } else {
+    list = ideas[category];
+  }
+
+  currentIdea = list[Math.floor(Math.random() * list.length)];
+
+  document.getElementById("idea").textContent = currentIdea;
+}
+
+function newChallenge() {
+  const challenge =
+    challenges[Math.floor(Math.random() * challenges.length)];
+
+  document.getElementById("challenge").textContent = challenge;
+}
+
+function saveIdea() {
+  if (!currentIdea) {
+    alert("Generate an idea first!");
+    return;
+  }
+
+  let saved = JSON.parse(localStorage.getItem("novaIdeas") || "[]");
+
+  if (!saved.includes(currentIdea)) {
+    saved.push(currentIdea);
+    localStorage.setItem("novaIdeas", JSON.stringify(saved));
+  }
+
+  showIdeas();
+}
+
+function showIdeas() {
+  const saved = JSON.parse(localStorage.getItem("novaIdeas") || "[]");
+
+  document.getElementById("saved").textContent =
+    saved.length ? saved.map((idea, i) => (i + 1) + ". " + idea).join("\n\n")
+    : "No saved ideas yet.";
+}
+
+function clearIdeas() {
+  if (confirm("Clear all saved ideas?")) {
+    localStorage.removeItem("novaIdeas");
+    showIdeas();
+  }
+}
+
+function saveNotes() {
+  localStorage.setItem(
+    "novaNotes",
+    document.getElementById("notes").value
+  );
+
+  document.getElementById("noteStatus").textContent =
+    "Notes saved successfully!";
+}
+
+function loadNotes() {
+  document.getElementById("notes").value =
+    localStorage.getItem("novaNotes") || "";
+
+  showIdeas();
+}
+
+loadNotes();
+</script>
+
+</body>
+</html>
